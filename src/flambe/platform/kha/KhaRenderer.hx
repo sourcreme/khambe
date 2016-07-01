@@ -67,7 +67,7 @@ class KhaRenderer implements InternalRenderer<kha.Image>
 
 	private inline function get_maxTextureSize() : Int
 	{
-		return 1024;
+		return kha.Image.maxSize;
 	}
 
 	private inline function get_hasGPU() : Value<Bool>
