@@ -21,7 +21,8 @@ class KhaStage implements StageSystem
 
 	public function new() : Void
 	{
-
+		_width = kha.System.windowWidth();
+		_height = kha.System.windowHeight();
 	}
 
 	public function lockOrientation (orient :Orientation) : Void
@@ -36,7 +37,10 @@ class KhaStage implements StageSystem
 
 	public function requestResize (width :Int, height :Int) : Void
 	{
-
+		if(_width != width || _height != height) {
+			_width = width;
+			_height = height;
+		}
 	}
 
 	public function requestFullscreen (enable :Bool = true) : Void
@@ -46,18 +50,21 @@ class KhaStage implements StageSystem
 
 	private inline function get_width() : Int
 	{
-		return kha.System.windowWidth();
+		return _width;
 	}
 
 	private inline function get_height() : Int
 	{
-		return kha.System.windowHeight();
+		return _height;
 	}
 
 	private inline function get_fullscreenSupported() : Bool
 	{
 		return false;
 	}
+
+	private var _width  :Int;
+	private var _height :Int;
 }
 
 
