@@ -23,7 +23,7 @@ class PatternSprite extends Sprite
 	{
 		super();
 		this.texture = texture;
-		pipelineState = flambe.platform.kha.KhaPipeline.imagePipeline;
+		pipeline = flambe.platform.kha.KhaPipeline.imagePipeline;
 
 		if (width < 0) {
 			width = (texture != null) ? texture.width : 0;
