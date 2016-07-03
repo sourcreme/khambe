@@ -95,6 +95,8 @@ class EmitterSprite extends Sprite
 	public var tangentialAccel (default, null) :AnimatedFloat;
 	public var tangentialAccelVariance (default, null) :AnimatedFloat;
 
+	public var currentColor (default, null) :Int;
+
 	public function new (mold :EmitterMold)
 	{
 		super();
@@ -103,6 +105,7 @@ class EmitterSprite extends Sprite
 		blendMode = mold.blendMode;
 		type = mold.type;
 		pipeline = flambe.platform.kha.KhaPipeline.imagePipeline;
+		currentColor = 0xFFFFFFFF;
 
 		startColorAlpha = new AnimatedFloat(mold.startColorAlpha);
 		startColorRed = new AnimatedFloat(mold.startColorRed);
@@ -338,9 +341,9 @@ class EmitterSprite extends Sprite
 				g.scale(particle.scale, particle.scale);
 			}
 
-			var color = kha.Color.fromFloats(particle.red, particle.green, particle.blue, 1);
+			currentColor = kha.Color.fromFloats(particle.red, particle.green, particle.blue, 1);
 
-			g.drawTexture(texture, offset, offset, color);
+			g.drawTexture(texture, offset, offset, currentColor);
 			g.restore();
 
 			++ii;

@@ -23,7 +23,7 @@ class KhaPlatform implements Platform
 			_khaMouse = new KhaMouse(_khaPointer);
 			_khaTouch = new KhaTouch(_khaPointer);
 
-			_stage = new KhaStage();
+			_khaStage = new KhaStage();
 			_khaRenderer = new KhaRenderer();
 			_mainLoop = new MainLoop();
 
@@ -89,7 +89,7 @@ class KhaPlatform implements Platform
 	
 	public function getStage() : StageSystem
 	{
-		return _stage;
+		return _khaStage;
 	}
 	
 	public function getStorage() : StorageSystem
@@ -177,7 +177,7 @@ class KhaPlatform implements Platform
 		_mainLoop.render(_khaRenderer);
 		var kGraphics :KhaGraphics = cast _khaRenderer.graphics;
 
-		framebuffer.g2.begin(true, kha.Color.Pink);
+		framebuffer.g2.begin(true, kha.Color.Black);
 		kha.Scaler.scale(kGraphics.backbuffer, framebuffer, kha.System.screenRotation);
 		framebuffer.g2.end();
 
@@ -187,6 +187,8 @@ class KhaPlatform implements Platform
 	private inline function translatePointer(kGraphics :KhaGraphics, framebuffer :kha.Framebuffer) : Void
 	{
 		var rect = kha.Scaler.targetRect(kGraphics.backbuffer.width, kGraphics.backbuffer.height, framebuffer.width, framebuffer.height, kha.System.screenRotation);
+
+		_khaStage.requestResize(Std.int(rect.width/rect.scaleFactor), Std.int(rect.height/rect.scaleFactor));
 
 		kGraphics._scaleOffset = _khaPointer._scale = rect.scaleFactor;
 		kGraphics._xOffset = _khaPointer._xOffset = rect.x;
@@ -214,7 +216,7 @@ class KhaPlatform implements Platform
 	private var _khaMouse    :MouseSystem;
 	private var _khaPointer  :KhaPointer;
 	private var _khaRenderer :KhaRenderer;
-	private var _stage       :KhaStage;
+	private var _khaStage    :KhaStage;
 	private var _khaTouch    :TouchSystem;
 	private var _khaExternal :ExternalSystem;
 	private var _khaKeyboard :KeyboardSystem;

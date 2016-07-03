@@ -30,7 +30,7 @@ class KhaGraphics implements InternalGraphics
 
 	public function willRender () :Void
 	{
-		prepareGraphics();
+		prepareGraphics2D();
 		backbuffer.g2.begin(true, kha.Color.Black);
 	}
 
@@ -58,15 +58,12 @@ class KhaGraphics implements InternalGraphics
 		state.alpha = current.alpha;
 		state.blendMode = current.blendMode;
 		state.pipeline = current.pipeline;
-		state.scissor = current.scissor;
+		// state.scissor = current.scissor;
 		_stateList = state;
 	}
 
 	public function restore () : Void
 	{
-		if(getTopState().scissor != null) {
-			backbuffer.g2.disableScissor();
-		}
 		Assert.that(_stateList.prev != null, "Can't restore without a previous save");
 		_stateList = _stateList.prev;
 	}
@@ -133,16 +130,6 @@ class KhaGraphics implements InternalGraphics
 
 	public function applyScissor (x :Float, y :Float, width :Float, height :Float) : Void
 	{
-		var matrix = getTopState().matrix;
-		if(getTopState().scissor == null) {
-			getTopState().scissor = new Rectangle(x + matrix.m02, y + matrix.m12, width, height);
-		}
-		else {
-			getTopState().scissor.x = x + matrix.m02;
-			getTopState().scissor.y = y + matrix.m12;
-			getTopState().scissor.width = width;
-			getTopState().scissor.height = height;
-		}
 	}
 
 	public function drawTexture (texture :Texture, destX :Float, destY :Float, ?color :Int = 0xFFFFFFFF) : Void
@@ -152,7 +139,7 @@ class KhaGraphics implements InternalGraphics
 
 	public function drawSubTexture (texture :Texture, destX :Float, destY :Float, sourceX :Float, sourceY :Float, sourceW :Float, sourceH :Float, ?color :Int = 0xFFFFFFFF) : Void
 	{
-		prepareGraphics();
+		prepareGraphics2D();
 		var texture :KhaTexture = cast texture;
 		var root = texture.root;
 		root.assertNotDisposed();
@@ -168,7 +155,7 @@ class KhaGraphics implements InternalGraphics
 
 	public function fillRect (color :Int, x :Float, y :Float, width :Float, height :Float) : Void
 	{
-		prepareGraphics();
+		prepareGraphics2D();
 
 		backbuffer.g2.color = 0xFF000000 + color;
 		backbuffer.g2.fillRect(x, y, width, height);
@@ -177,7 +164,7 @@ class KhaGraphics implements InternalGraphics
 
 	public function drawText (font :Font, text :String, color :Int, size :Int, destX :Float, destY :Float) : Void
 	{
-		prepareGraphics();
+		prepareGraphics2D();
 
 		backbuffer.g2.color = 0xFF000000 + color;
 		backbuffer.g2.font = font.nativeFont;
@@ -186,12 +173,12 @@ class KhaGraphics implements InternalGraphics
 		backbuffer.g2.color = kha.Color.White;
 	}
 
-	private inline function getTopState () : DrawingState
+	public inline function getMatrix() : Matrix
 	{
-		return _stateList;
+		return getTopState().matrix;
 	}
 
-	private inline function prepareGraphics() : Void
+	public function prepareGraphics2D() : Void
 	{
 		var matrix = getTopState().matrix;
 		backbuffer.g2.opacity = getTopState().alpha;
@@ -201,11 +188,11 @@ class KhaGraphics implements InternalGraphics
 			0, 0, 1
 		);
 
-		if(getTopState().scissor != null) {
-			var scissor = getTopState().scissor;
-			var y =  System.stage.height - scissor.y - scissor.height;
-			backbuffer.g2.scissor(Std.int(scissor.x), Std.int(y), Std.int(scissor.width), Std.int(scissor.height));
-		}
+		// if(getTopState().scissor.hasScissor) {
+		// 	var scissor = getTopState().scissor;
+		// 	var y =  System.stage.height - scissor.y - scissor.height;
+		// 	backbuffer.g2.scissor(scissor.x, y, scissor.width, scissor.height);
+		// }
 
 		if(getTopState().pipeline != null) {
 			if(_curBlendMode != getTopState().blendMode || _curPipeline != getTopState().pipeline.name) {
@@ -252,9 +239,11 @@ class KhaGraphics implements InternalGraphics
 				}
 			}
 		}
+	}
 
-			
-			
+	private inline function getTopState () : DrawingState
+	{
+		return _stateList;
 	}
 
 	private var _stateList :DrawingState = null;
@@ -275,7 +264,6 @@ private class DrawingState
 	public var alpha :Float;
 	public var blendMode :BlendMode;
 	public var pipeline :Pipeline;
-	public var scissor :Rectangle = null;
 
 	public var prev :DrawingState = null;
 	public var next :DrawingState = null;
@@ -287,8 +275,5 @@ private class DrawingState
 		blendMode = Normal;
 	}
 }
-
-
-
 
 
