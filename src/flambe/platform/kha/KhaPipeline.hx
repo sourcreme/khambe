@@ -9,13 +9,22 @@ import kha.Shaders;
 
 import flambe.display.Pipeline;
 
-class KhaPipeline
+class KhaPipeline implements Pipeline
 {
-	public static var colorPipeline (get, null) :Pipeline;
-	public static var imagePipeline (get, null) :Pipeline;
-	public static var textPipeline  (get, null) :Pipeline;
+	public var name :String;
+	public var pipelineState :PipelineState;
 
-	private static inline function get_imagePipeline() : Pipeline
+	public static var colorPipeline (get, null) :KhaPipeline;
+	public static var imagePipeline (get, null) :KhaPipeline;
+	public static var textPipeline  (get, null) :KhaPipeline;
+
+	public function new(name :String, pipelineState :PipelineState) : Void
+	{
+		this.name = name;
+		this.pipelineState = pipelineState;
+	}
+
+	private static inline function get_imagePipeline() : KhaPipeline
 	{
 		if(_imagePipeline == null) {
 			var imagePState = new PipelineState();
@@ -35,13 +44,13 @@ class KhaPipeline
 			
 			imagePState.compile();
 
-			_imagePipeline = new KPipe("imagePipeline", imagePState);
+			_imagePipeline = new KhaPipeline("imagePipeline", imagePState);
 		}
 
 		return _imagePipeline;
 	}
 
-	private static inline function get_colorPipeline() : Pipeline
+	private static inline function get_colorPipeline() : KhaPipeline
 	{
 		if(_colorPipeline == null) {
 			var colorPState = new PipelineState();
@@ -60,13 +69,13 @@ class KhaPipeline
 				
 			colorPState.compile();
 
-			_colorPipeline = new KPipe("colorPipeline", colorPState);
+			_colorPipeline = new KhaPipeline("colorPipeline", colorPState);
 		}
 
 		return _colorPipeline;
 	}
 
-	private static inline function get_textPipeline() : Pipeline
+	private static inline function get_textPipeline() : KhaPipeline
 	{
 		if(_textPipeline == null) {
 			var textPState = new PipelineState();
@@ -86,29 +95,16 @@ class KhaPipeline
 			
 			textPState.compile();
 
-			_textPipeline = new KPipe("textPipeline", textPState);
+			_textPipeline = new KhaPipeline("textPipeline", textPState);
 		}
 
 		return _textPipeline;
 	}
 
-	private static var _colorPipeline :Pipeline = null;
-	private static var _imagePipeline :Pipeline = null;
-	private static var _textPipeline  :Pipeline = null;
+	private static var _colorPipeline :KhaPipeline = null;
+	private static var _imagePipeline :KhaPipeline = null;
+	private static var _textPipeline  :KhaPipeline = null;
 }
-
-private class KPipe implements Pipeline
-{
-	public var name :String;
-	public var pipelineState :PipelineState;
-
-	public function new(name :String, pipelineState :PipelineState) : Void
-	{
-		this.name = name;
-		this.pipelineState = pipelineState;
-	}
-}
-
 
 
 

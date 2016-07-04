@@ -1,5 +1,5 @@
 //
-// Flambe - Rapid game development
+// flambe - Rapid game development
 // https://github.com/aduros/flambe/blob/master/LICENSE.txt
 
 package flambe.display;
@@ -18,7 +18,7 @@ enum EmitterType
  * A particle system configuration, that can be used to create emitter sprites. The configuration is
  * loaded from a .pex file, authored in a tool such as Particle Designer.
  *
- * _NOTE_: There are some restrictions to keep in mind when using Particle Designer with Flambe:
+ * _NOTE_: There are some restrictions to keep in mind when using Particle Designer with flambe:
  *
  * - Particle coloring is not supported.
  * - Only normal and additive blend modes are supported.

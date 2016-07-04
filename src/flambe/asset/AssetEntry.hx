@@ -1,12 +1,12 @@
 //
-// Flambe - Rapid game development
+// flambe - Rapid game development
 // https://github.com/aduros/flambe/blob/master/LICENSE.txt
 
 package flambe.asset;
 
 using flambe.util.Strings;
 
-/** Specifies all supported asset formats across all Flambe platforms. */
+/** Specifies all supported asset formats across all flambe platforms. */
 enum AssetFormat
 {
 	// Images

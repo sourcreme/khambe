@@ -1,6 +1,6 @@
 //
 // Flambe - Rapid game development
-// https://github.com/aduros/khambe/blob/master/LICENSE.txt
+// https://github.com/aduros/flambe/blob/master/LICENSE.txt
 
 package flambe.util;
 

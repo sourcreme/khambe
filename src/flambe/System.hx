@@ -1,5 +1,5 @@
 //
-// Flambe - Rapid game development
+// flambe - Rapid game development
 // https://github.com/aduros/flambe/blob/master/LICENSE.txt
 
 package flambe;
@@ -116,7 +116,7 @@ class System
 	public static var volume (default, null) :AnimatedFloat = new AnimatedFloat(1);
 
 	/**
-	 * Starts up Flambe, this should usually be the first thing a game does.
+	 * Starts up flambe, this should usually be the first thing a game does.
 	 */
 	public static function init (title :String, width :Int, height :Int, onInitialized :Void -> Void)
 	{
