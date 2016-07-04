@@ -96,7 +96,7 @@ class MovieKeyframe
 	/** The length of this keyframe in frames. */
 	public var duration (default, null) :Float;
 
-	@:allow(khambe) var symbolName (default, null) :String;
+	public var symbolName (default, null) :String;
 	public var symbol (default, null) :Symbol = null;
 
 	public var label (default, null) :String;
@@ -170,12 +170,12 @@ class MovieKeyframe
 		}
 	}
 
-	@:allow(khambe) inline function setVisible (visible :Bool)
+	public inline function setVisible (visible :Bool)
 	{
 		this.visible = visible;
 	}
 
-	@:allow(khambe) inline function setSymbol (symbol :Symbol)
+	public inline function setSymbol (symbol :Symbol)
 	{
 		this.symbol = symbol;
 	}

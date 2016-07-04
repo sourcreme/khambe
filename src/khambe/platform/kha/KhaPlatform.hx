@@ -4,6 +4,7 @@
 
 package khambe.platform.kha;
 
+import khambe.display.Pipeline;
 import khambe.subsystem.*;
 import khambe.util.Logger;
 import khambe.util.Promise;
@@ -141,6 +142,11 @@ class KhaPlatform implements Platform
 		return -1;
 	}
 
+	public function modifyFramebuffer(framebuffer :kha.Framebuffer) : Void
+	{
+
+	}
+
 	private inline function handleApplicationState() : Void
 	{
 		function foregroundListener() : Void
@@ -183,6 +189,8 @@ class KhaPlatform implements Platform
 
 		translatePointer(kGraphics, framebuffer);
 	}
+
+	private var _time :Float = 0;
 
 	private inline function translatePointer(kGraphics :KhaGraphics, framebuffer :kha.Framebuffer) : Void
 	{
