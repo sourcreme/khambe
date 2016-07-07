@@ -32,11 +32,26 @@ class KhaTextureRoot extends BasicAsset<KhaTextureRoot> implements TextureRoot
 
 	public function readPixels (x :Int, y :Int, width :Int, height :Int) :Bytes
 	{
-		return null;
+		var bytes = image.lock();
+		image.unlock();
+
+		var pos = (image.width * y + x) * 4;
+		var len = width*height*4;
+		return bytes.sub(pos, len);
 	}
 
 	public function writePixels (pixels :Bytes, x :Int, y :Int, sourceW :Int, sourceH :Int) :Void
 	{
+		var bytes = image.lock();
+		image.unlock();
+
+		var pos = (image.width * y + x) * 4;
+		var len = width*height*4;
+
+		for(i in 0...len) {
+			bytes.set(i+pos, pixels.get(i));
+		}
+		this.image = kha.Image.fromBytes(bytes, image.width, image.height);
 	}
 
 	public function getGraphics () :Graphics

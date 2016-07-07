@@ -45,7 +45,7 @@ class KhaStage implements StageSystem
 
 	public function requestFullscreen (enable :Bool = true) : Void
 	{
-
+		//depends on platform SystemImpl
 	}
 
 	private inline function get_width() : Int
