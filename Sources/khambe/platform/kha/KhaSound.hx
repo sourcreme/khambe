@@ -23,6 +23,7 @@ class KhaSound extends BasicAsset<KhaSound> implements Sound
 	{
 		super();
 		this.nativeSound = nativeSound;
+		_duration = -1;
 	}
 
 	public function play (volume :Float = 1.0) :Playback
@@ -37,7 +38,9 @@ class KhaSound extends BasicAsset<KhaSound> implements Sound
 
 	public function get_duration () :Float
 	{
-		return -1;
+		if(_duration == -1) {
+		}
+		return _duration;
 	}
 
 	override private function copyFrom (asset :KhaSound)
