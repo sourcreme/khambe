@@ -179,11 +179,11 @@ class KhaPlatform implements Platform
 
 	public function getLocale () :String
 	{
-		return null;
+		return "";
 	}
 	public function getTime () :Float
 	{
-		return null;
+		return 0;
 	}
 
 	// Statically initialized subsystems

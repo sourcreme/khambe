@@ -4,6 +4,7 @@
 
 package flambe.util;
 
+
 /**
  * Utility mixins for Arrays. Designed to be imported with 'using'.
  */
@@ -34,39 +35,36 @@ class Arrays
     @:noUsing inline public static function create<A> (length :Int) :Array<A>
     {
 #if (flash || js)
-        // This trick only works in Flash and JS
-        return untyped __new__(Array, length);
+		var a:Array<A> = untyped __new__(Array, length);
+		return a;
 #else
-        #error "Arrays.create unimplemented on this target"
+		return cpp.NativeArray.create(length);
 #end
     }
 
     /** Resizes an array in-place. */
     inline public static function resize<A> (arr :Array<A>, length :Int)
     {
+         if (arr.length > length) {
 #if (flash || js)
-        // This trick only works in Flash and JS
-        (untyped arr).length = length;
+			untyped arr.length = length;
+			return arr;
 #else
-        #error "Arrays.resize unimplemented on this target"
+			return cpp.NativeArray.setSize(arr, length);
 #end
+		}
+		else {
+			return arr;
+        }
     }
 
     inline public static function indexOf<A> (arr :Array<A>, element :A, ?fromIndex :Int) :Int
     {
-#if (flash || js)
-        return (untyped arr).indexOf(element, fromIndex);
-#else
-        #error "Arrays.indexOf unimplemented on this target"
-#end
+        return arr.indexOf(element, fromIndex);
     }
 
     inline public static function lastIndexOf<A> (arr :Array<A>, element :A, ?fromIndex :Int) :Int
     {
-#if (flash || js)
-        return (untyped arr).lastIndexOf(element, fromIndex);
-#else
-        #error "Arrays.lastIndexOf unimplemented on this target"
-#end
+        return arr.lastIndexOf(element, fromIndex);
     }
 }
