@@ -4,4 +4,4 @@ A port of [Flambe](https://github.com/aduros/flambe/) working in [Kha](//github.
 
 License
 
-Khambe is released under the MIT License. Khambe has source code from multiple authors. The markdown license lists all authors.
+Khambe is released under the MIT License. Khambe has source code from multiple authors. The [markdown license](/github.com/sourcreme/khambe/blob/master/license.md) lists all authors.
